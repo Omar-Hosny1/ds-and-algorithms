@@ -72,3 +72,40 @@ const twoSum2 = (array1, array2) => {
 };
 
 twoSum2([1, 3, 5], [1, 2, 6, 7]);
+
+/**
+ * @param {number[]} nums
+ * @return {void} Do not return anything, modify nums in-place instead.
+ */
+var moveZeroes = function (nums) {
+  let index = 0;
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i]) {
+      nums[index++] = nums[i];
+    }
+  }
+  for (let i = index; i < nums.length; i++) {
+    nums[i] = 0;
+  }
+  return nums;
+};
+
+// console.log(moveZeroes([0, 1, 0, 3, 12]));
+
+/**
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+var containsDuplicate = function (nums) {
+  let sortedNums = nums.sort((a, b) => a - b);
+  let firstIndex = sortedNums[0];
+  let res = false;
+  for (let i = 0; i < sortedNums.length - 1; i++) {
+    if (sortedNums[i + 1] == sortedNums[i]) {
+      res = true;
+    }
+  }
+  return res;
+};
+
+console.log(containsDuplicate([1, 3, 3]));
