@@ -25,5 +25,3 @@ Strings.splice(2, 0, "e"); // O(n)
 
 //delete
 Strings.splice(2, 1); // O(n)
-
-console.log(Strings);
