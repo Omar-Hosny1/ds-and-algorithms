@@ -33,13 +33,17 @@ class MyArray {
       this.data[i] = this.data[i + 1];
     }
   }
-}
 
-const array = new MyArray();
-array.push("omar");
-array.push("hosny"); // d
-array.push("mohamed");
-// array.pop();
-array.delete(1);
-console.log(array.data);
-console.log(array.length);
+  display() {
+    let DesplayedArray = "[";
+    for (let i = 0; i < this.length; i++) {
+      if (i == this.length - 1) {
+        DesplayedArray += this.data[i];
+      } else {
+        DesplayedArray += this.data[i] + ", ";
+      }
+    }
+    DesplayedArray += "]";
+    return DesplayedArray;
+  }
+}
