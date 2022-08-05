@@ -108,4 +108,4 @@ var containsDuplicate = function (nums) {
   return res;
 };
 
-console.log(containsDuplicate([1, 3, 3]));
+// console.log(containsDuplicate([1, 3, 3]));
