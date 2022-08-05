@@ -16,7 +16,7 @@ const firstRepeatedCharacter = (array) => {
 
   return GreatestRe;
 };
-console.log(firstRepeatedCharacter([2, 5, 5, 2, 3, 5, 1, 2, 4]));
+// console.log(firstRepeatedCharacter([2, 5, 5, 2, 3, 5, 1, 2, 4]));
 
 const firstRepeatedCharacterTwo = (array) => {
   for (let i = 0; i < array.length; i++) {
@@ -28,7 +28,7 @@ const firstRepeatedCharacterTwo = (array) => {
   }
   return "No Repeated Characters!";
 };
-console.log(firstRepeatedCharacterTwo([2, 5, 5, 2, 3, 5, 1, 2, 4]));
+// console.log(firstRepeatedCharacterTwo([2, 5, 5, 2, 3, 5, 1, 2, 4]));
 
 const firstRepeatedCharacterThree = (array) => {
   let map = {};
@@ -41,4 +41,51 @@ const firstRepeatedCharacterThree = (array) => {
   }
   return undefined;
 };
-console.log(firstRepeatedCharacterThree([2, 5, 5, 2, 3, 5, 1, 2, 4])); // DIFFRENT RESULT
+// console.log(firstRepeatedCharacterThree([2, 5, 5, 2, 3, 5, 1, 2, 4])); // DIFFRENT RESULT
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var firstMissingPositive = function (nums) {
+  if (nums.length == 1) {
+    if (nums[0] > 1) {
+      return 1;
+    } else if (nums[0] == 0) {
+      return nums[0] + 1;
+    } else if (nums[0] < 0) {
+      return 1;
+    } else if (nums[0] == 1) return 2;
+  }
+  const sortedArray = nums.sort((a, b) => a - b);
+  let smallestPositiveInteger = 1;
+  let stop = false;
+  while (stop == false) {
+    let isHere = binarySearch(sortedArray, smallestPositiveInteger);
+    if (isHere == -1) stop = true;
+    else smallestPositiveInteger++;
+  }
+  return smallestPositiveInteger;
+};
+
+function binarySearch(array, target) {
+  if (array.length == 1 || array.length == 0) {
+    return array;
+  }
+  let start = 0,
+    end = array.length - 1;
+  while (start <= end) {
+    middle = Math.floor((start + end) / 2);
+    if (array[middle] > target) {
+      end = middle - 1;
+    }
+    if (array[middle] < target) {
+      start = middle + 1;
+    }
+    if (array[middle] == target) {
+      return middle;
+    } //T
+  }
+  return -1;
+}
+console.log(firstMissingPositive([2, 3, 4]));
