@@ -4,6 +4,14 @@ class HashTable {
     this.index = 0;
   }
 
+  $hash(key) {
+    let hash = 0;
+    for (let i = 0; i < key.length; i++) {
+      hash = (hash + key.charCodeAt(i) * i) % this.data.length;
+    }
+    return hash;
+  }
+
   set(key, value) {
     let address = this.$hash(key);
     if (!this.data[address]) {
@@ -26,12 +34,12 @@ class HashTable {
     return undefined;
   }
 
-  $hash(key) {
-    let hash = 0;
-    for (let i = 0; i < key.length; i++) {
-      hash = (hash + key.charCodeAt(i) * i) % this.data.length;
+  keys() {
+    const keysArray = [];
+    for (let i = 0; i < this.data.length; i++) {
+      if (this.data[i]) keysArray.push(this.data[i][0][0]);
     }
-    return hash;
+    return keysArray;
   }
 }
 
@@ -41,4 +49,4 @@ myHashTable.get("grapes");
 myHashTable.set("apples", 9);
 myHashTable.get("apples");
 
-console.log(myHashTable.get("apples"));
+console.log(myHashTable.keys());
