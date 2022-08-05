@@ -41,4 +41,4 @@ const firstRepeatedCharacterThree = (array) => {
   }
   return undefined;
 };
-console.log(firstRepeatedCharacterThree([2, 5, 5, 2, 3, 5, 1, 2, 4]));
+console.log(firstRepeatedCharacterThree([2, 5, 5, 2, 3, 5, 1, 2, 4])); // DIFFRENT RESULT
