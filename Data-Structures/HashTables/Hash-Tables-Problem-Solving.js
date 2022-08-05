@@ -16,7 +16,7 @@ const firstRepeatedCharacter = (array) => {
 
   return GreatestRe;
 };
-console.log(firstRepeatedCharacter([2, 5, 1, 2, 3, 5, 1, 2, 4]));
+console.log(firstRepeatedCharacter([2, 5, 5, 2, 3, 5, 1, 2, 4]));
 
 const firstRepeatedCharacterTwo = (array) => {
   for (let i = 0; i < array.length; i++) {
@@ -28,4 +28,17 @@ const firstRepeatedCharacterTwo = (array) => {
   }
   return "No Repeated Characters!";
 };
-console.log(firstRepeatedCharacterTwo([3, 1, 2, 1, 3]));
+console.log(firstRepeatedCharacterTwo([2, 5, 5, 2, 3, 5, 1, 2, 4]));
+
+const firstRepeatedCharacterThree = (array) => {
+  let map = {};
+  for (let i = 0; i < array.length; i++) {
+    if (map[array[i]] == undefined) {
+      map[array[i]] = true;
+    } else if (map[array[i]] == true) {
+      return array[i];
+    }
+  }
+  return undefined;
+};
+console.log(firstRepeatedCharacterThree([2, 5, 5, 2, 3, 5, 1, 2, 4]));
