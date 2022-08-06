@@ -88,4 +88,24 @@ function binarySearch(array, target) {
   }
   return -1;
 }
-console.log(firstMissingPositive([2, 3, 4]));
+// console.log(firstMissingPositive([2, 3, 4]));
+
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {character}
+ */
+var findTheDifference = function (s, t) {
+  let sumS = 0;
+  let sumT = 0;
+  for (let i = 0; i < t.length; i++) {
+    sumT += t[i].charCodeAt();
+    if (!(i == t.length - 1)) {
+      sumS += s[i].charCodeAt();
+    }
+  }
+  const chr = String.fromCharCode(sumT - sumS);
+  return chr;
+};
+
+console.log(findTheDifference(w, y));
