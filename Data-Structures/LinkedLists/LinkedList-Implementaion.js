@@ -15,6 +15,16 @@
 //   },
 // };
 
+/*
+**OPTIONAL**
+class Node { 
+    constructor(value){
+        this.value = value;
+        this.next = null;
+    }
+}
+*/
+
 class LinkedList {
   constructor(value) {
     this.head = { value, next: null };
@@ -32,9 +42,19 @@ class LinkedList {
     this.length++;
     return this;
   }
+
+  prepend(value) {
+    let newNode = { value: value, next: null };
+    newNode.next = this.head;
+    this.head = newNode;
+    this.length++;
+    return this;
+  }
 }
 
 const myLinkedList = new LinkedList(10);
 
 myLinkedList.append(5);
-console.log(myLinkedList);
+myLinkedList.append(15);
+myLinkedList.prepend(1);
+console.log(myLinkedList.head);
