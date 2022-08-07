@@ -11,4 +11,6 @@ Linked List Time Complexity :
 3- Insert => O(n)
 4- Delete => O(n)
 5- Lookup => O(n)
+
+ * A Pointer Is Simply Is A Refrence To Something Else In Meomry
 */
