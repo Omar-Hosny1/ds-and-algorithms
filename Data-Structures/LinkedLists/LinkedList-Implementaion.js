@@ -32,6 +32,16 @@ class LinkedList {
     this.length = 1;
   }
 
+  printList() {
+    let LinkedList = [];
+    let currentNode = this.head;
+    while (currentNode !== null) {
+      LinkedList.push(currentNode.value);
+      currentNode = currentNode.next;
+    }
+    return LinkedList;
+  }
+
   append(value) {
     const newNode = {
       value: value,
@@ -50,11 +60,36 @@ class LinkedList {
     this.length++;
     return this;
   }
+
+  insert(index, value) {
+    if (index > this.length) {
+      return this.append(value);
+    }
+    if (index == 0) {
+      return this.prepend(value);
+    }
+    const newNode = { value, next: null };
+    let conter = 0;
+    let replacedNode = this.head;
+    while (index !== conter) {
+      replacedNode = replacedNode.next;
+      conter++;
+    }
+    newNode.next = replacedNode;
+    let count = 0;
+    let mainLinked = this.head;
+    while (count <= index) {
+      count++;
+      if (count == index) {
+        mainLinked.next = newNode;
+      }
+      mainLinked = mainLinked.next;
+    }
+    this.length++;
+    return this;
+  }
 }
 
 const myLinkedList = new LinkedList(10);
 
-myLinkedList.append(5);
-myLinkedList.append(15);
-myLinkedList.prepend(1);
-console.log(myLinkedList.head);
+console.log(myLinkedList.printList());
