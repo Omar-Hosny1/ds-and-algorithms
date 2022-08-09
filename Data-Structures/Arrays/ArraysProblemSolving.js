@@ -134,4 +134,85 @@ var twoSum = function (nums, target) {
   return -1;
 };
 
-console.log(twoSum([3, 3], 6));
+// console.log(twoSum([3, 3], 6));
+
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+var twoSum = function (nums, target) {
+  let map = {};
+  for (let i = 0; i < nums.length; i++) {
+    if (target - nums[i] in map) {
+      console.log(target - nums[i] in map);
+      return [map[target - nums[i]], i];
+    } else {
+      map[nums[i]] = i;
+      console.log(map);
+    }
+  }
+};
+
+// console.log(twoSum([3, 3, 5, 3], 6));
+
+// console.log("a".charCodeAt(0));
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+var isAnagram = function (s, t) {
+  if (s.length !== t.length) return false;
+  let mapS = {},
+    mapT = {};
+  for (let i in s) {
+    if (mapS[s[i]] == undefined) {
+      mapS[s[i]] = 1;
+    } else {
+      mapS[s[i]] = mapS[s[i]] + 1;
+    }
+    if (mapT[t[i]] == undefined) {
+      mapT[t[i]] = 1;
+    } else {
+      mapT[t[i]] = mapT[t[i]] + 1;
+    }
+  }
+
+  for (let i of s) {
+    if (mapS[i] !== mapT[i]) return false;
+  }
+  return true;
+};
+// console.log(isAnagram("a", "ab"));
+
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+var isAnagram = function (s, t) {
+  return s.split("").sort().join("") == t.split("").sort().join("");
+};
+
+console.log(isAnagram("a", "a"));
+
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var isPalindrome = function (s) {
+  if (s == "") return true;
+  const reversedS = reverse(s)
+    .replace(/[^a-zA-Z0-9]/g, "")
+    .toLocaleLowerCase();
+  return reversedS == s.replace(/[^a-zA-Z0-9]/g, "").toLocaleLowerCase();
+};
+
+function reverse(s) {
+  let result = "";
+  for (let i = 0; i < s.length; i++) {
+    result = s[i] + result;
+  }
+  return result;
+}
