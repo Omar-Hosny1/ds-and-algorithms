@@ -109,3 +109,29 @@ var containsDuplicate = function (nums) {
 };
 
 // console.log(containsDuplicate([1, 3, 3]));
+
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+var twoSum = function (nums, target) {
+  const originalArray = [...nums];
+  nums = nums.sort((a, b) => a - b);
+  let a = 0,
+    b = nums.length - 1;
+
+  while (a <= b) {
+    if (nums[a] + nums[b] > target) b--;
+    if (nums[a] + nums[b] < target) a++;
+    if (nums[a] + nums[b] == target) {
+      return [
+        originalArray.indexOf(nums[a]),
+        originalArray.lastIndexOf(nums[b]),
+      ];
+    }
+  }
+  return -1;
+};
+
+console.log(twoSum([3, 3], 6));
