@@ -22,7 +22,6 @@ var twoSum = function (nums, target) {
 
   while (startPoint <= endPoint) {
     let currentSum = nums[startPoint] + nums[endPoint];
-    console.log(currentSum);
     if (currentSum > target) --endPoint;
     else if (currentSum < target) ++startPoint;
     else if (currentSum == target) return [startPoint, endPoint];
@@ -137,56 +136,6 @@ var twoSum = function (nums, target) {
 // console.log(twoSum([3, 3], 6));
 
 /**
- * @param {number[]} nums
- * @param {number} target
- * @return {number[]}
- */
-var twoSum = function (nums, target) {
-  let map = {};
-  for (let i = 0; i < nums.length; i++) {
-    if (target - nums[i] in map) {
-      console.log(target - nums[i] in map);
-      return [map[target - nums[i]], i];
-    } else {
-      map[nums[i]] = i;
-      console.log(map);
-    }
-  }
-};
-
-// console.log(twoSum([3, 3, 5, 3], 6));
-
-// console.log("a".charCodeAt(0));
-/**
- * @param {string} s
- * @param {string} t
- * @return {boolean}
- */
-var isAnagram = function (s, t) {
-  if (s.length !== t.length) return false;
-  let mapS = {},
-    mapT = {};
-  for (let i in s) {
-    if (mapS[s[i]] == undefined) {
-      mapS[s[i]] = 1;
-    } else {
-      mapS[s[i]] = mapS[s[i]] + 1;
-    }
-    if (mapT[t[i]] == undefined) {
-      mapT[t[i]] = 1;
-    } else {
-      mapT[t[i]] = mapT[t[i]] + 1;
-    }
-  }
-
-  for (let i of s) {
-    if (mapS[i] !== mapT[i]) return false;
-  }
-  return true;
-};
-// console.log(isAnagram("a", "ab"));
-
-/**
  * @param {string} s
  * @param {string} t
  * @return {boolean}
@@ -195,7 +144,7 @@ var isAnagram = function (s, t) {
   return s.split("").sort().join("") == t.split("").sort().join("");
 };
 
-console.log(isAnagram("a", "a"));
+// console.log(isAnagram("a", "a"));
 
 /**
  * @param {string} s
@@ -209,10 +158,54 @@ var isPalindrome = function (s) {
   return reversedS == s.replace(/[^a-zA-Z0-9]/g, "").toLocaleLowerCase();
 };
 
-function reverse(s) {
-  let result = "";
-  for (let i = 0; i < s.length; i++) {
-    result = s[i] + result;
+/**
+ * @param {number[]} numbers
+ * @param {number} target
+ * @return {number[]}
+ */
+var twoSum = function (numbers, target) {
+  let a = 0,
+    b = numbers.length - 1;
+  while (a <= b) {
+    if (numbers[a] + numbers[b] > target) b--;
+    if (numbers[a] + numbers[b] < target) a++;
+    if (numbers[a] + numbers[b] == target) {
+      return [a + 1, b + 1];
+    }
   }
-  return result;
-}
+  return undefined;
+};
+
+// console.log(twoSum([2, 7, 11, 15], 9));
+
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var isValid = function (s) {
+  let result = [];
+  for (let i = 0; i < s.length; i++) {
+    let currentIndex = s[i];
+    if (currentIndex == "[" || currentIndex == "(" || currentIndex == "{") {
+      result.push(currentIndex);
+    } else {
+      if (
+        (currentIndex == ")" &&
+          result[result.length - 1] == "(" &&
+          result.length > 0) ||
+        (currentIndex == "]" &&
+          result[result.length - 1] == "[" &&
+          result.length > 0) ||
+        (currentIndex == "}" &&
+          result[result.length - 1] == "{" &&
+          result.length > 0)
+      )
+        result.pop();
+      else {
+        return false;
+      }
+    }
+  }
+  return result.length == 0;
+};
+// console.log(isValid("]"));
