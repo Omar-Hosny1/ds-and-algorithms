@@ -209,3 +209,93 @@ var isValid = function (s) {
   return result.length == 0;
 };
 // console.log(isValid("]"));
+
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var findDuplicates = function (nums) {
+  nums = nums.sort((a, b) => a - b);
+  let result = [];
+  for (let i = 0; i < nums.length - 1; i++) {
+    if (nums[i] == nums[i + 1]) result.push(nums[i]);
+  }
+  return result;
+};
+// console.log(findDuplicates([4, 3, 2, 7, 8, 2, 3, 1]));
+
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+var subsets = function (nums) {
+  if (nums.length == 1) return [[], nums];
+  let set = new Set(nums);
+  nums = Array.from(set);
+  let result = [[], nums];
+  for (let i = 0; i < nums.length; i++) {
+    result.push([nums[i]]);
+    for (let j = i + 1; j < nums.length; j++) {
+      result.push([nums[i], nums[j]]);
+    }
+  }
+  return result;
+};
+
+// console.log(subsets([0]));
+
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var findDisappearedNumbers = function (nums) {
+  let i = 1;
+  let result = [];
+  nums = nums.sort((a, b) => a - b);
+  while (i <= nums.length) {
+    if (!binarySearch(nums, i)) result.push(i);
+    i++;
+  }
+  return result;
+};
+
+function binarySearch(array, target) {
+  let start = 0,
+    end = array.length - 1;
+  while (start <= end) {
+    middle = Math.floor((start + end) / 2);
+    if (array[middle] > target) {
+      end = middle - 1;
+    }
+    if (array[middle] < target) {
+      start = middle + 1;
+    }
+    if (array[middle] == target) {
+      return true;
+    } //T
+  }
+  return false;
+}
+
+// console.log(findDisappearedNumbers([4, 3, 2, 7, 8, 2, 3, 1]));
+
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var findDisappearedNumbers = function (nums) {
+  let length = nums.length;
+  nums = Array.from(new Set(nums)).sort((a, b) => a - b);
+  let i = 1;
+  let result = [];
+  while (i <= length) {
+    if (nums[i - 1] !== i) {
+      if (i <= nums.length) {
+        result.push(i);
+      }
+    }
+    i++;
+  }
+  return result;
+};
+console.log(findDisappearedNumbers([4, 3, 2, 7, 8, 2, 3, 1]));
