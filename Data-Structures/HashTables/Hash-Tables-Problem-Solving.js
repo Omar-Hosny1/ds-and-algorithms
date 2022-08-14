@@ -175,3 +175,38 @@ var romanToInt = function (s) {
 };
 
 // console.log(romanToInt("MCMXCIV"));
+
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var majorityElement = function (nums) {
+  let thePassingCondition = nums.length / 3;
+  let map = {};
+  for (let i in nums) {
+    let currentVal = nums[i];
+    if (map[currentVal] == undefined) map[currentVal] = 1;
+    else map[currentVal] = map[currentVal] + 1;
+  }
+  map = Object.entries(map);
+  let RESULT = [];
+  for (let i = 0; i < map.length; i++) {
+    let curentNode = map[i];
+    if (curentNode[1] > thePassingCondition) RESULT.push(+curentNode[0]);
+  }
+  return RESULT;
+};
+
+// majorityElement([3, 2, 3]);
+
+/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
+ */
+var nextGreaterElement = function (nums1, nums2) {
+  let result = [];
+  for (let i = 0; i < nums1.length; i++) {
+    const nums2Ele = nums2.indexOf(nums1[i]);
+  }
+};
