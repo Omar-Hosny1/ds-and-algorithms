@@ -317,3 +317,22 @@ var numIdenticalPairs = function (nums) {
 };
 
 // console.log(numIdenticalPairs([1, 1, 1, 1]));
+
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+let smallerNumbersThanCurrent = function (nums) {
+  let newArray = [];
+  nums.forEach((ele, index) => {
+    newArray[index] = 0;
+    for (let i = 0; i < nums.length; i++) {
+      if (ele > nums[i]) {
+        newArray[index]++;
+      }
+    }
+  });
+  return newArray;
+};
+
+// console.log(smallerNumbersThanCurrent([8, 1, 2, 2, 3]));

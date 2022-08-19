@@ -210,3 +210,171 @@ var nextGreaterElement = function (nums1, nums2) {
     const nums2Ele = nums2.indexOf(nums1[i]);
   }
 };
+
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+var isIsomorphic = function (s, t) {
+  if (s.length !== t.length) return false;
+  let mapS = {};
+  let mapT = {};
+  for (let i in s) {
+    let currentValS = s[i];
+    let currentValT = t[i];
+    if (mapS[currentValS] == undefined) {
+      mapS[currentValS] = currentValT;
+    } else {
+      if (mapS[currentValS] !== currentValT) return false;
+    }
+    if (mapT[currentValT] == undefined) {
+      mapT[currentValT] = currentValS;
+    } else {
+      if (mapT[currentValT] !== currentValS) return false;
+    }
+  }
+  return true;
+};
+
+// console.log(isIsomorphic("paper", "fofle"));
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLongestSubstring = function (s) {
+  let comparingString = "";
+  let arrayOfLengths = [];
+  const set = new Set();
+  let i = 0;
+  while (i < s.length) {
+    let prevLength = set.size;
+    set.add(s[i]);
+    if (prevLength !== set.size) {
+      arrayOfLengths.push(prevLength);
+      set.clear();
+    }
+    i++;
+  }
+
+  console.log(set);
+  // return Math.max(...arrayOfLengths);
+};
+// console.log(lengthOfLongestSubstring("pwwkew"));
+// // console.log("abcda".slice(0, "abcda".length - 1).length);
+// let set = new Set();
+// console.log(set.add("a"));
+// console.log(set.add("a"));
+// set.clear();
+// console.log(set);
+
+/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
+ */
+var nextGreaterElement = function (nums1, nums2) {
+  let map = {};
+  let a = 0;
+  let b = 1;
+  while (b <= nums2.length) {
+    let firstEle = nums2[a];
+    let secondEle = nums2[b];
+    if (secondEle == undefined) {
+      a++;
+      b = a + 1;
+      continue;
+    }
+    if (secondEle > firstEle) {
+      map[firstEle] = secondEle;
+      a++;
+      b = a + 1;
+    } else {
+      map[firstEle] = -1;
+      b++;
+    }
+  }
+  let result = [];
+  for (let i in nums1) {
+    let currentEle = nums1[i];
+    if (map[currentEle] == undefined) {
+      result.push(-1);
+    } else {
+      result.push(map[currentEle]);
+    }
+  }
+  return result;
+};
+
+// console.log(nextGreaterElement([2, 4], [1, 2, 3, 4]));
+
+/**
+ * @param {number} num
+ * @return {number}
+ */
+var addDigits = function (num) {
+  if (num < 10) return num;
+  let strNum = num.toString();
+  let sum = 0;
+  while (strNum.length > 1) {
+    sum = strNum.split("").reduce((a, b) => +a + +b);
+    if (sum.toString().length > 1) {
+      strNum = sum.toString();
+    } else {
+      return sum;
+    }
+  }
+};
+// console.log(addDigits(38));
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var longestPalindrome = function (s) {
+  if (s.split("").reverse().join("") == s) return s.length;
+  let map = {};
+  for (let i in s) {
+    let currentEle = s[i];
+    if (map[currentEle] == undefined) {
+      map[currentEle] = 1;
+    } else {
+      map[currentEle] = map[currentEle] + 1;
+    }
+  }
+  console.log(map);
+  let containsOne = false;
+  let length = 0;
+
+  for (let i in map) {
+    let value = map[i];
+    if (value % 2 == 0) {
+      length += value;
+    } else if (!containsOne) {
+      length += value;
+      containsOne = true;
+    } else if (value % 2 == 1 && value > 2) {
+      length += value - 1;
+    }
+  }
+  return length;
+};
+// console.log(longestPalindrome("abbac")); //5
+
+/**
+ * @param {number} num
+ * @return {number}
+ */
+var maximum69Number = function (num) {
+  if (!num.toString().split("").includes("6")) return num;
+  num = num.toString().split("");
+  for (let i = 0; i < num.length; i++) {
+    if (num[i] == "6") {
+      num[i] = "9";
+      return +num.join("");
+    }
+  }
+};
+
+// console.log(maximum69Number(999));

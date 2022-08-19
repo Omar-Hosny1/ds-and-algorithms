@@ -34,9 +34,12 @@ function fibonacciNumber(n) {
 
 // console.log(fibonacciNumber(3));
 
-function reversrString(s) {
-  if (s.length == 0 || s.length == 1) {
-    return s;
+function totalSum(n) {
+  if (n < 1) {
+    console.log(n);
+    return;
   }
-  return reversrString(s[0]);
+  totalSum(n) + totalSum(n - 1);
 }
+
+totalSum(3);
