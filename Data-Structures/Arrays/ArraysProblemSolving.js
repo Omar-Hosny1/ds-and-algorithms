@@ -336,3 +336,188 @@ let smallerNumbersThanCurrent = function (nums) {
 };
 
 // console.log(smallerNumbersThanCurrent([8, 1, 2, 2, 3]));
+
+/**
+ * @param {string[]} words
+ * @return {string[]}
+ */
+var findWords = function (words) {
+  let row1 = ["e", "i", "o", "p", "q", "r", "t", "u", "w", "y"];
+  let row2 = ["a", "d", "f", "g", "h", "j", "k", "l", "s"];
+  let row3 = ["b", "c", "m", "n", "v", "x", "z"];
+  let result = [];
+  for (let i = 0; i < words.length; i++) {
+    const sortedWord = words[i].toLowerCase().split("").sort().join("");
+    if (row1.includes(sortedWord[0])) {
+      for (let j = 0; j < sortedWord.length; j++) {
+        if (!binarySearch(row1, sortedWord[j])) {
+          break;
+        } else {
+          if (j == sortedWord.length - 1) {
+            result.push(words[i]);
+          }
+        }
+      }
+    } else if (row2.includes(sortedWord[0])) {
+      for (let j = 0; j < sortedWord.length; j++) {
+        if (!binarySearch(row2, sortedWord[j])) {
+          break;
+        } else {
+          if (j == sortedWord.length - 1) {
+            result.push(words[i]);
+          }
+        }
+      }
+    } else {
+      for (let j = 0; j < sortedWord.length; j++) {
+        if (!binarySearch(row3, sortedWord[j])) {
+          break;
+        } else {
+          if (j == sortedWord.length - 1) {
+            result.push(words[i]);
+          }
+        }
+      }
+    }
+  }
+  return result;
+};
+
+// console.log(findWords(["Hello", "Alaska", "Dad", "Peace"]));
+
+function binarySearch(array, target) {
+  let start = 0,
+    end = array.length - 1;
+  while (start <= end) {
+    middle = Math.floor((start + end) / 2);
+    if (array[middle] > target) {
+      end = middle - 1;
+    }
+    if (array[middle] < target) {
+      start = middle + 1;
+    }
+    if (array[middle] == target) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {boolean}
+ */
+var search = function (nums, target) {
+  nums = nums.sort((a, b) => a - b);
+  return binarySearch(nums, target);
+};
+
+function binarySearch(array, target) {
+  let start = 0,
+    end = array.length - 1;
+  while (start <= end) {
+    middle = Math.floor((start + end) / 2);
+    if (array[middle] > target) {
+      end = middle - 1;
+    }
+    if (array[middle] < target) {
+      start = middle + 1;
+    }
+    if (array[middle] == target) {
+      return true;
+    } //T
+  }
+  return false;
+}
+
+/**
+ * @param {string[]} words
+ * @return {number}
+ */
+var maxProduct = function (words) {
+  let result = [];
+  for (let i = 0; i < words.length; i++) {
+    for (let j = i + 1; j < words.length; j++) {
+      if (hasCommonChars(words[i], words[j])) {
+        continue;
+      } else {
+        result.push(words[i].length * words[j].length);
+      }
+    }
+  }
+  return result.length ? Math.max(...result) : 0;
+};
+
+function hasCommonChars(word1, word2) {
+  let result = [];
+  word1 = word1.split("").sort().join("");
+  word2 = word2.split("").sort().join("");
+  for (let i = 0; i < word1.length; i++) {
+    if (!binarySearch(word2, word1[i])) {
+      result.push();
+    }
+  }
+  return false;
+}
+
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number[]}
+ */
+var topKFrequent = function (nums, k) {
+  let map = {};
+  let length = 0;
+  nums = nums.sort((a, b) => a - b);
+  let result = [];
+
+  for (let i in nums) {
+    let currentEle = nums[i];
+    if (map[currentEle] == undefined) {
+      map[currentEle] = 1;
+      length++;
+    } else {
+      map[currentEle] = map[currentEle] + 1;
+    }
+  }
+  console.log(nums);
+  console.log(map);
+  // const entries = Object.entries(map)
+  //   .map((ele) => ele[1])
+  //   .sort((a, b) => a - b)
+  //   .reverse();
+  // let index = 0;
+  // for (let i = 0; i < length; i++) {
+  //   if (map[i] == entries[index]) {
+  //     result.push(+i);
+  //     index++;
+  //   }
+
+  // }
+  // for (let i in map) {
+  //   if (map[i] == entries[index]) {
+  //     result.push(+i);
+  //     index++;
+  //   }
+  // }
+  // console.log(map);
+  // console.log(entries);
+  // return result.slice(0, k);
+};
+// console.log(
+//   topKFrequent([
+//     3, 2, 3, 1, 2, 4, 5, 5, 6, 7, 7, 8, 2, 3, 1, 1, 1, 10, 11, 5, 6, 2, 4, 7, 8,
+//     5, 6,
+//   ])
+// );
+
+/**
+ * @param {string[]} words
+ * @return {string[]}
+ */
+var commonChars = function (words) {
+  words = words.map((ele) => ele.split("").sort().join(""));
+};
+
+// console.log(commonChars(["bella", "label", "roller"]));
