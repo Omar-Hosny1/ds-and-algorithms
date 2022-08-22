@@ -521,3 +521,107 @@ var commonChars = function (words) {
 };
 
 // console.log(commonChars(["bella", "label", "roller"]));
+
+/**
+ * @param {number[]} arr
+ * @return {void} Do not return anything, modify arr in-place instead.
+ */
+var duplicateZeros = function (arr) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === 0) {
+      let temp = arr[i + 1];
+      arr[i] = 0;
+      arr[i + 1] = 0;
+      arr[i + 2] = temp;
+      i += 3;
+      // break;
+    }
+  }
+  console.log(arr);
+};
+
+// duplicateZeros([1, 0, 2, 3, 0, 4, 5, 0]);
+
+function sum0(n) {
+  let result = [];
+  //if n is odd, we wont fill the last cell of the result array. It will be 0 by default.
+  for (let i = 0; i < n - 1; i += 2) {
+    result[i] = -(i + 1);
+    result[i + 1] = i + 1;
+  }
+  if (n % 2 == 1) result.push(0);
+  return result;
+}
+
+// console.log(sum0(5));
+
+/**
+ * @param {number} num1
+ * @param {number} num2
+ * @return {number}
+ */
+var countOperations = function (num1, num2) {
+  let steps = 0;
+  while (num1 > 0 && num2 > 0) {
+    if (num1 >= num2) {
+      num1 = num1 - num2;
+      steps++;
+    } else if (num1 <= num2) {
+      num2 = num2 - num1;
+      steps++;
+    }
+  }
+  return steps;
+};
+
+// console.log(countOperations(2, 3));
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLongestSubstring = function (s) {
+  if (s.length === 0) return 0;
+  if (s.length === 1) return 1;
+  if (s.length == new Set(s).size) return s.length;
+  if (new Set(s).size == 1) return 1;
+  let result = 0;
+  for (let i = 0; i < s.length; i++) {
+    for (let j = i + 1; j < s.length; j++) {
+      if (s.slice(i, j + 1).length == new Set(s.slice(i, j + 1)).size) {
+        if (result < s.slice(i, j + 1).length) {
+          result = s.slice(i, j + 1).length;
+        }
+      }
+    }
+  }
+  return result;
+};
+
+// console.log(lengthOfLongestSubstring("pwwkew"));
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var countSubstrings = function (s) {
+  let result = 0;
+  for (let i = 0; i < s.length; i++) {
+    for (let j = i; j < s.length; j++) {
+      if (isPlaindrome(s.slice(i, j + 1))) {
+        result++;
+      }
+    }
+  }
+  return result;
+};
+
+console.log(countSubstrings("abc"));
+function isPlaindrome(s) {
+  if (s.length == 0 || s.length == 1) return true;
+  let reversedS = "";
+  for (let i = 0; i < s.length; i++) {
+    reversedS = s[i] + reversedS;
+  }
+  return reversedS === s;
+}

@@ -378,3 +378,33 @@ var maximum69Number = function (num) {
 };
 
 // console.log(maximum69Number(999));
+
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var frequencySort = function (s) {
+  let map = {};
+  let result = "";
+  for (let i in s) {
+    let currentChar = s[i];
+    if (map[currentChar] == undefined) {
+      map[currentChar] = 1;
+    } else {
+      map[currentChar] = map[currentChar] + 1;
+    }
+  }
+  console.log(map);
+  const sortedMap = Object.fromEntries(
+    Object.entries(map).sort((a, b) => b[1] - a[1])
+  );
+
+  // console.log(sortedMap);
+  for (let i in sortedMap) {
+    const filledArray = new Array(sortedMap[i]).fill(i);
+    result += filledArray.join("");
+  }
+  return result;
+};
+
+// console.log(frequencySort("omara"));
