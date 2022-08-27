@@ -92,13 +92,103 @@ var removeNthFromEnd = function (head, n) {
   return head;
 };
 
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {number}
+ */
+var getDecimalValue = function (head) {
+  let currentNode = head;
+  let binaryNums = [];
+  while (currentNode) {
+    binaryNums.push(currentNode.val);
+    currentNode = currentNode.next;
+  }
+  return binaryToDecimal(binaryNums);
+};
+
+function binaryToDecimal(array) {
+  let power = 0;
+  let index = array.length - 1;
+  let sum = 0;
+  while (index >= 0) {
+    if (array[index] == 0) {
+      index--;
+      power++;
+    } else {
+      sum += 2 ** power;
+      power++;
+      index--;
+    }
+  }
+  return sum;
+}
 let linkedList = {
   val: 1,
   next: {
-    val: 2,
+    val: 1,
     next: {
-      val: 3,
+      val: 2,
       next: null,
     },
   },
 };
+// console.log(getDecimalValue(linkedList));
+
+/**
+ * @param {ListNode} head
+ * @param {number} val
+ * @return {ListNode}
+ */
+var removeElements = function (head, val) {
+  let currentNode = head;
+
+  while (currentNode) {
+    if (currentNode.val == val) {
+      head = currentNode.next;
+    }
+    if (currentNode.next.val == val && currentNode.next !== null) {
+      currentNode.next = currentNode.next.next;
+    } else if (currentNode.next.next == null && currentNode.next.val == val) {
+      currentNode.next = null;
+      return head;
+    }
+    currentNode = currentNode.next;
+  }
+  return head;
+};
+
+// removeElements(linkedList);
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var deleteDuplicates = function (head) {
+  let currentNode = head;
+  while (currentNode) {
+    if (currentNode.val === currentNode.next.val) {
+      currentNode.next = currentNode.next.next;
+    }
+    currentNode = currentNode.next;
+  }
+  return head;
+};
+// console.log(deleteDuplicates(linkedList));
+// console.log(Array.from(new Set([1, 1, 1])));
+
+
+

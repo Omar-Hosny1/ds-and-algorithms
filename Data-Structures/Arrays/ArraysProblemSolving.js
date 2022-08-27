@@ -616,7 +616,8 @@ var countSubstrings = function (s) {
   return result;
 };
 
-console.log(countSubstrings("abc"));
+// console.log(countSubstrings("abc"));
+
 function isPlaindrome(s) {
   if (s.length == 0 || s.length == 1) return true;
   let reversedS = "";
@@ -625,3 +626,157 @@ function isPlaindrome(s) {
   }
   return reversedS === s;
 }
+
+var addBinary = function (a, b) {
+  if (a.length == 1 && b.length == 1) {
+    if (a == "0" && b == "0") return "0";
+    if ((a == "1" && b == "0") || (a == "0" && b == "1")) return "1";
+    if ((a == "1" && b == "1") || (a == "1" && b == "1")) return "10";
+  }
+  let decimalSum = binaryToDecimal(a) + binaryToDecimal(b);
+
+  return decimalToBinary(decimalSum);
+};
+
+function binaryToDecimal(array) {
+  let power = 0;
+  let index = array.length - 1;
+  let sum = 0;
+  while (index >= 0) {
+    if (array[index] == 0) {
+      index--;
+      power++;
+    } else {
+      sum += 2 ** power;
+      power++;
+      index--;
+    }
+  }
+  return sum;
+}
+
+function decimalToBinary(num) {
+  let result = "";
+  while (num > 0) {
+    if (num % 2 == 0) {
+      result = "0" + result;
+    } else {
+      result = "1" + result;
+    }
+    num = Math.floor(num / 2);
+  }
+  return result;
+}
+
+// console.log(addBinary("1010", "1011"));
+
+/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @param {number[]} nums3
+ * @return {number[]}
+ */
+var twoOutOfThree = function (nums1, nums2, nums3) {
+  nums1 = nums1.sort((a, b) => a - b);
+  nums2 = nums2.sort((a, b) => a - b);
+  nums3 = nums3.sort((a, b) => a - b);
+  let result = [];
+  for (let i = 0; i < nums1.length; i++) {
+    if (binarySearch(nums2, nums1[i]) || binarySearch(nums3, nums1[i]))
+      result.push(nums1[i]);
+    // result.push(nums1[i]);
+  }
+
+  for (let i = 0; i < nums2.length; i++) {
+    if (binarySearch(nums1, nums2[i]) || binarySearch(nums3, nums2[i]))
+      result.push(nums2[i]);
+  }
+
+  return Array.from(new Set(result));
+};
+
+function binarySearch(array, target) {
+  let start = 0,
+    end = array.length - 1;
+  while (start <= end) {
+    middle = Math.floor((start + end) / 2);
+    if (array[middle] > target) {
+      end = middle - 1;
+    }
+    if (array[middle] < target) {
+      start = middle + 1;
+    }
+    if (array[middle] == target) {
+      return true;
+    } //T
+  }
+  return false;
+}
+
+// console.log(
+//   twoOutOfThree(
+//     [2, 15, 10, 11, 14, 12, 14, 11, 9, 1],
+//     [8, 9, 13, 2, 11, 8],
+//     [13, 5, 15, 7, 12, 7, 8, 3, 13, 15]
+//   )
+// );
+
+/**
+ * @param {number[][]} items1
+ * @param {number[][]} items2
+ * @return {number[][]}
+ */
+var mergeSimilarItems = function (items1, items2) {
+  let map1 = {};
+  items1 = [...items1, ...items2];
+
+  for (let i in items1) {
+    let currentEle = items1[i];
+    if (map1[currentEle[0]] == undefined) {
+      map1[currentEle[0]] = currentEle[1];
+    } else {
+      map1[currentEle[0]] = map1[currentEle[0]] + currentEle[1];
+    }
+  }
+
+  return Object.entries(map1)
+    .map((ele) => [+ele[0], ele[1]])
+    .sort((a, b) => a[0] - b[0]);
+};
+// [[1,1],[3,2],[2,3],[2,1],[3,2],[1,3]]
+let res = mergeSimilarItems(
+  [
+    [1, 1],
+    [4, 5],
+    [3, 8],
+    [3, 1],
+    [1, 5],
+  ],
+  [
+    [3, 1],
+    [1, 5],
+  ]
+);
+// console.log(res);
+
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var singleNumber = function (nums) {
+  let map = {};
+  for (let i in nums) {
+    if (map[nums[i]] == undefined) {
+      map[nums[i]] = 1;
+    } else {
+      map[nums[i]] = map[nums[i]] + 1;
+    }
+  }
+  let result = [];
+  for (let key in map) {
+    if (map[key] == 1) result.push(key);
+  }
+  return result;
+};
+// [1,1,2,2,3,5]
+singleNumber([1, 2, 1, 3, 2, 5]);

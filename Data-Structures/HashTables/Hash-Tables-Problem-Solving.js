@@ -408,3 +408,109 @@ var frequencySort = function (s) {
 };
 
 // console.log(frequencySort("omara"));
+
+/**
+ * @param {number[]} arr1
+ * @param {number[]} arr2
+ * @return {number[]}
+ */
+var relativeSortArray = function (arr1, arr2) {
+  let map = {};
+  for (let i in arr1) {
+    let currentEle = arr1[i];
+    if (map[currentEle] == undefined) {
+      map[currentEle] = 1;
+    } else {
+      map[currentEle] = map[currentEle] + 1;
+    }
+  }
+  let result = [];
+  for (let i in arr2) {
+    let currentEle = arr2[i];
+    if (map[currentEle] !== undefined) {
+      for (let i = 0; i < map[currentEle]; i++) {
+        result.push(currentEle);
+      }
+      map[currentEle] = 0;
+    }
+  }
+  const entries = Object.fromEntries(
+    Object.entries(map)
+      .sort((a, b) => a[0] - b[0])
+      .filter((ele) => ele[1] > 0)
+      .sort((a, b) => a[0] - b[0])
+  );
+  for (let i in entries) {
+    for (let j = 0; j < entries[i]; j++) {
+      result.push(+i);
+    }
+  }
+  return result;
+};
+
+// console.log(
+//   relativeSortArray([2, 3, 1, 3, 2, 4, 6, 7, 9, 2, 19], [2, 1, 4, 3, 9, 6])
+// );
+
+/**
+ * @param {number[]} arr
+ * @return {boolean}
+ */
+var uniqueOccurrences = function (arr) {
+  let map = {};
+  for (let i in arr) {
+    let curentEle = arr[i];
+    if (map[curentEle] == undefined) {
+      map[curentEle] = 1;
+    } else {
+      map[curentEle] = map[curentEle] + 1;
+    }
+  }
+  const entries = Object.entries(map)
+    .map((ele) => ele[1])
+    .sort((a, b) => a - b);
+  for (let i = 0; i < entries.length - 1; i++) {
+    if (entries[i] == entries[i + 1]) {
+      return false;
+    }
+  }
+  return true;
+};
+
+// console.log(uniqueOccurrences([1, 2, 2, 1, 1, 3, 2]));
+
+/**
+ * @param {string[]} list1
+ * @param {string[]} list2
+ * @return {string[]}
+ */
+var findRestaurant = function (list1, list2) {
+  let andyMap = {};
+  let dorisMap = {};
+  for (let i in list1) {
+    let curentEle = list1[i];
+    if (andyMap[curentEle] == undefined) {
+      andyMap[curentEle] = 1;
+    }
+  }
+  let result = [];
+  for (let i in list2) {
+    let curentEle = list2[i];
+    if (andyMap[curentEle] !== undefined) {
+      result.push(curentEle);
+    }
+  }
+  return result;
+};
+
+console.log(
+  findRestaurant(
+    ["Shogun", "Tapioca Express", "Burger King", "KFC"],
+    [
+      "Piatti",
+      "The Grill at Torrey Pines",
+      "Hungry Hunter Steakhouse",
+      "Shogun",
+    ]
+  )
+);
