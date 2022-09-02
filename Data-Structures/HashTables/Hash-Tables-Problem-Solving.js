@@ -597,7 +597,8 @@ var countPoints = function (rings) {
   let counter = 0;
   for (let key in map) {
     if (
-      (map[key].includes("R") && map[key].includes("G")) ||
+      map[key].includes("R") &&
+      map[key].includes("G") &&
       map[key].includes("B")
     ) {
       counter++;
