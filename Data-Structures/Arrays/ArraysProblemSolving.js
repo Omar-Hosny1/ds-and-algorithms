@@ -779,4 +779,266 @@ var singleNumber = function (nums) {
   return result;
 };
 // [1,1,2,2,3,5]
-singleNumber([1, 2, 1, 3, 2, 5]);
+// singleNumber([1, 2, 1, 3, 2, 5]);
+
+/**
+ * @param {number} n
+ * @return {number[]}
+ */
+var countBits = function (n) {
+  let nums = [];
+  for (let i = 0; i < n + 1; i++) {
+    nums.push(i);
+  }
+  let result = [];
+  for (let i = 0; i < nums.length; i++) {
+    result.push(countOnes(decimalToBinary(nums[i])));
+  }
+  return result;
+};
+
+function decimalToBinary(num) {
+  let result = "";
+  while (num > 0) {
+    if (num % 2 == 0) {
+      result = "0" + result;
+    } else {
+      result = "1" + result;
+    }
+    num = Math.floor(num / 2);
+  }
+  return result;
+}
+function countOnes(str) {
+  let length = str.split("").filter((ele) => ele !== "0").length;
+  return length;
+}
+
+/**
+ * @param {number} num
+ * @return {number}
+ */
+var findComplement = function (num) {
+  const binaryNum = decimalToBinary(num);
+  let res = [];
+  for (let i = 0; i < binaryNum.length; i++) {
+    if (binaryNum[i] == "0") res.push(1);
+    if (binaryNum[i] == "1") res.push(0);
+  }
+  return binaryToDecimal(res);
+};
+function binaryToDecimal(array) {
+  let power = 0;
+  let index = array.length - 1;
+  let sum = 0;
+  while (index >= 0) {
+    if (array[index] == 0) {
+      index--;
+      power++;
+    } else {
+      sum += 2 ** power;
+      power++;
+      index--;
+    }
+  }
+  return sum;
+}
+
+function decimalToBinary(num) {
+  let result = "";
+  while (num > 0) {
+    if (num % 2 == 0) {
+      result = "0" + result;
+    } else {
+      result = "1" + result;
+    }
+    num = Math.floor(num / 2);
+  }
+  return result;
+}
+// console.log(77 % 40);
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var sumOfUnique = function (nums) {
+  let map = {};
+  for (let i in nums) {
+    let ele = nums[i];
+    if (map[ele] == undefined) {
+      map[ele] = 1;
+    } else {
+      map[ele] = map[i] + 1;
+    }
+  }
+  let result = 0;
+  for (let i in map) {
+    if (map[i] == 1) {
+      result += +i;
+    }
+  }
+  return result;
+};
+// console.log(sumOfUnique([1, 2, 3, 1]));
+
+/**
+ * @param {number} n
+ * @return {boolean}
+ */
+var isHappy = function (n) {
+  let hashSet = new Set();
+  let length = 0;
+  while (true) {
+    let sum = addPow2(n.toString());
+    hashSet.add(sum);
+    length++;
+    if (hashSet.size !== length) return false;
+    if (sum == 1) return true;
+    n = sum;
+  }
+};
+
+function addPow2(str) {
+  let sum = 0;
+  for (let i = 0; i < str.length; i++) {
+    let curr = +str[i];
+    sum += curr ** 2;
+  }
+  return sum;
+}
+// console.log(isHappy(19));
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var findMaxConsecutiveOnes = function (nums) {
+  // let map = {};
+  // for (let i in nums) {
+  // map[i] = nums[i];
+  // }
+  // console.table(map);
+  let result = [];
+  for (let i = 0; i < nums.length; i++) {
+    let max = 0;
+    if (nums[i] == 1) max++;
+    for (let j = i + 1; j < nums.length; j++) {
+      if (nums[i] == 1) {
+        if (nums[j] == 1) {
+          max++;
+        } else {
+          break;
+        }
+      }
+    }
+    result.push(max);
+    max = 0;
+  }
+  return Math.max(...result);
+};
+// console.log(findMaxConsecutiveOnes([1, 1, 0, 1, 1, 1]));
+
+function findMaxConsecutiveOnes2(nums) {
+  let count = 0;
+  let max = 0;
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] == 1) {
+      count++;
+    } else count = 0;
+    max = Math.max(count, max);
+  }
+  return max;
+}
+// findMaxConsecutiveOnes2([1, 1, 0, 1, 1, 1]);
+
+/**
+ * @param {string} word
+ * @return {boolean}
+ */
+var detectCapitalUse = function (word) {
+  word = word.split("");
+  let isOkUpperCase = word.every((ele) => ele == ele.toUpperCase());
+  if (isOkUpperCase) return true;
+  let isOkLowerCase = word.every((ele) => ele == ele.toLowerCase());
+  if (isOkLowerCase) return true;
+  if (word[0] == word[0].toUpperCase()) {
+    let counter = 0;
+    for (let i = 1; i < word.length; i++) {
+      if (word[i] == word[i].toUpperCase()) {
+        counter++;
+      }
+    }
+    if (counter == word.length - 2) return true;
+  } else {
+    return false;
+  }
+  return false;
+};
+// console.log(detectCapitalUse("FFFFFFFFFFFFFFFFFFFFf"));
+
+/**
+ * @param {string} title
+ * @return {string}
+ */
+var capitalizeTitle = function (title) {
+  title = title.split(" ");
+  for (let i = 0; i < title.length; i++) {
+    if (title[i].length == 1 || title[i].length == 2) {
+      title[i] = title[i].toLowerCase();
+    } else {
+      let str = title[i][0].toUpperCase();
+      str += title[i].slice(1).toLowerCase();
+      title[i] = str;
+    }
+  }
+  return title.join(" ");
+};
+
+// console.log(capitalizeTitle("of"));
+
+/**
+ * @param {number[][]} image
+ * @return {number[][]}
+ */
+var flipAndInvertImage = function (image) {
+  for (let i = 0; i < image.length; i++) {
+    let currentEle = image[i];
+    currentEle = invertBinary(currentEle.reverse());
+  }
+  return image;
+};
+
+function invertBinary(arr) {
+  let i = 0;
+  let j = arr.length - 1;
+  if (arr.length % 2 == 1) {
+    arr[j] = arr[j] == 0 ? 1 : 0;
+    j = arr.length - 2;
+  }
+  while (i < j) {
+    arr[i] = arr[i] == 0 ? 1 : 0;
+    arr[j] = arr[j] == 0 ? 1 : 0;
+    i++;
+    j--;
+  }
+  return arr;
+}
+
+/**
+ * @param {character[]} letters
+ * @param {character} target
+ * @return {character}
+ */
+var nextGreatestLetter = function (letters, target) {
+  for (let i = 0; i < letters.length; i++) {
+    if (letters[i].charCodeAt() > target.charCodeAt()) {
+      return letters[i];
+    }
+  }
+  return letters[0];
+};
+// console.log(nextGreatestLetter(["c", "f", "j"], "j"));
+// console.log("c".charCodeAt());
+// console.log("j".charCodeAt());
+// https://leetcode.com/problems/count-elements-with-strictly-smaller-and-greater-elements/

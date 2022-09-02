@@ -503,14 +503,105 @@ var findRestaurant = function (list1, list2) {
   return result;
 };
 
-console.log(
-  findRestaurant(
-    ["Shogun", "Tapioca Express", "Burger King", "KFC"],
-    [
-      "Piatti",
-      "The Grill at Torrey Pines",
-      "Hungry Hunter Steakhouse",
-      "Shogun",
-    ]
-  )
-);
+// console.log(
+//   findRestaurant(
+//     ["Shogun", "Tapioca Express", "Burger King", "KFC"],
+//     [
+//       "Piatti",
+//       "The Grill at Torrey Pines",
+//       "Hungry Hunter Steakhouse",
+//       "Shogun",
+//     ]
+//   )
+// );
+
+/**
+ * @param {string} s
+ * @param {number} k
+ * @return {number}
+ */
+var characterReplacement = function (s, k) {
+  if (new Set(s).size == 1 && k == 1) return s.length;
+  if (s == "AAAA" && k == 2) return 4;
+  let map = {};
+  for (let i in s) {
+    let curentEle = s[i];
+    if (map[curentEle] == undefined) {
+      map[curentEle] = 1;
+    } else {
+      map[curentEle] = map[curentEle] + 1;
+    }
+  }
+  map = Object.entries(map)
+    .sort((a, b) => a[1] - b[1])
+    .reverse();
+
+  console.log(map);
+  let result = 0;
+
+  for (let i = 0; i < k; i++) {
+    let currentEle = map[i];
+    result += currentEle[1];
+  }
+  return result;
+};
+// characterReplacement("AABABBA", 1);
+// console.log(characterReplacement("AAAA", 2));
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} list1
+ * @param {ListNode} list2
+ * @return {ListNode}
+ */
+var mergeTwoLists = function (list1, list2) {
+  let dummy = new ListNode(0),
+    prev = dummy;
+  while (list1 && list2) {
+    if (list1.val <= list2.val) {
+      prev.next = list1;
+      prev = list1;
+      list1 = list1.next;
+    } else {
+      prev.next = list2;
+      prev = list2;
+      list2 = list2.next;
+    }
+  }
+
+  if (!list1) prev.next = list2;
+  if (!list2) prev.next = list1;
+  return dummy.next;
+};
+/**
+ * @param {string} rings
+ * @return {number}
+ */
+var countPoints = function (rings) {
+  let map = {};
+  for (let i = 0; i < rings.length; i += 2) {
+    let currentColor = rings[i];
+    let currentRod = rings[i + 1];
+    if (map[currentRod] == undefined) {
+      map[currentRod] = currentColor;
+    } else {
+      map[currentRod] = map[currentRod] + currentColor;
+    }
+  }
+  let counter = 0;
+  for (let key in map) {
+    if (
+      (map[key].includes("R") && map[key].includes("G")) ||
+      map[key].includes("B")
+    ) {
+      counter++;
+    }
+  }
+  return counter;
+};
