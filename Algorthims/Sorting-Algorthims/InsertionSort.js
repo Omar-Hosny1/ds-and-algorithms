@@ -25,5 +25,5 @@ function insertionSort(array) {
   }
 }
 
-insertionSort(numbers);
+// insertionSort(numbers);
 // console.log(numbers);

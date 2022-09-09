@@ -1039,6 +1039,63 @@ var nextGreatestLetter = function (letters, target) {
   return letters[0];
 };
 // console.log(nextGreatestLetter(["c", "f", "j"], "j"));
-// console.log("c".charCodeAt());
-// console.log("j".charCodeAt());
+
 // https://leetcode.com/problems/count-elements-with-strictly-smaller-and-greater-elements/
+/**
+ * @param {string} s
+ * @param {string} part
+ * @return {string}
+ */
+var removeOccurrences = function (s, part) {
+  while (true) {
+    if (!firstAndLastRemovel(s, part)) return s;
+    let indecies = firstAndLastRemovel(s, part);
+    s = s.substring(0, indecies[0]) + s.substring(indecies[1] + 1);
+  }
+};
+
+function firstAndLastRemovel(s, p) {
+  if (!s.includes(p)) return "";
+  let lengthOfThePart = p.length;
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] == p[0]) {
+      let subSuq = s.substring(i, i + lengthOfThePart);
+      if (subSuq == p) return [i, i + lengthOfThePart - 1];
+    }
+  }
+}
+// console.log(removeOccurrences("daabcbaabcbc", "abc"));
+
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+var backspaceCompare = function (s, t) {
+  return afterBackspace(s) == afterBackspace(t);
+};
+function afterBackspace(s) {
+  s = s.split("");
+  let stack = [];
+  for (let char of s) {
+    if (char !== "#") stack.push(char);
+    else stack.pop();
+  }
+  return stack.join("");
+}
+
+//https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/
+
+/**
+ * @param {number[]} nums
+ * @param {number} n
+ * @return {number[]}
+ */
+var shuffle = function (nums, n) {
+  let res = [];
+  for (let i = 0; i < n; i++) {
+    res.push(nums[i]);
+    res.push(nums[i + n]);
+  }
+  return res;
+};
