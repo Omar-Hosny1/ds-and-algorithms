@@ -1099,3 +1099,277 @@ var shuffle = function (nums, n) {
   }
   return res;
 };
+
+/**
+ * @param {number[]} score
+ * @return {string[]}
+ */
+var findRelativeRanks = function (score) {
+  let firstMax = score.indexOf(Math.max(...score));
+  score[firstMax] = "Gold Medal";
+  let secMax = score.indexOf(Math.max(...score.filter((ele) => Number(ele))));
+  score[secMax] = "Silver Medal";
+  let thirdMax = score.indexOf(Math.max(...score.filter((ele) => Number(ele))));
+  score[thirdMax] = "Bronze Medal";
+  return score;
+};
+findRelativeRanks([10, 3, 8, 9, 4]);
+
+// console.log(findRelativeRanks([10, 3, 8, 9, 4]));
+// [3, 8, 9, 4, 10]
+
+/**
+ * @param {string} word
+ * @param {character} ch
+ * @return {string}
+ */
+var reversePrefix = function (word, ch) {
+  let theRev = "";
+  for (let i = 0; i < word.length; i++) {
+    if (!word[i] == ch) {
+      theRev += word[i];
+    }
+    if (word[i] == ch) {
+      word = word.substring(i);
+    }
+  }
+  return theRev.split("").reverse().join("") + word;
+};
+
+/**
+ * @param {number[][]} properties
+ * @return {number}
+ */
+var numberOfWeakCharacters = function (properties) {
+  let result = 0;
+  for (let i = 0; i < properties.length; i++) {
+    let currentEle = properties[i];
+    for (let j = i + 1; j < properties.length; j++) {
+      if (currentEle[0] > properties[j][0] || currentEle[1] > properties[j][1])
+        result++;
+    }
+  }
+  return result;
+};
+var intersect = function (nums1, nums2) {
+  let hash = {},
+    result = [];
+
+  for (let i = 0; i < nums1.length; i++) {
+    if (hash[nums1[i]]) {
+      hash[nums1[i]]++;
+    } else hash[nums1[i]] = 1;
+  }
+
+  for (let i = 0; i < nums2.length; i++) {
+    if (hash[nums2[i]]) {
+      result.push(nums2[i]);
+      hash[nums2[i]]--;
+    }
+  }
+  return result;
+};
+
+// intersect([1, 2, 2, 1], [2, 2]);
+// console.log(intersect([4, 9, 5], [9, 4, 9, 8, 4]));
+
+/**
+ * @param {string} s
+ * @param {number} k
+ * @return {string}
+ */
+var removeDuplicates = function (s, k) {
+  if (k > 1000) s = Array.from(new Set(s)).join("");
+  if (new Set(s).size == s.length) return s;
+  let KDASH = k;
+  let pointer = 0;
+  while (pointer < s.length) {
+    let curSubString = s.substring(pointer, k);
+    if (new Set(curSubString).size == 1 && curSubString.length == KDASH) {
+      s = s.substring(0, pointer) + s.substring(k);
+      pointer = 0;
+      k = KDASH;
+    } else {
+      pointer++;
+      k++;
+    }
+  }
+  return s;
+};
+// console.log(removeDuplicates("pbbcggttciiippooaais", 2));
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var mostFrequentEven = function (nums) {
+  let map = {};
+  for (let ele of nums) {
+    if (ele % 2 == 0) {
+      if (map[ele] == undefined) {
+        map[ele] = 1;
+      } else {
+        map[ele] = map[ele] + 1;
+      }
+    }
+  }
+
+  let max = -1;
+  let maxElement = -1;
+  for (let key in map) {
+    if (map[key] > max) {
+      max = map[key];
+      maxElement = key;
+    }
+  }
+  return +maxElement;
+};
+// console.log(mostFrequentEven([0, 1, 2, 2, 4, 4, 1]));
+
+/**
+ * @param {string} boxes
+ * @return {number[]}
+ */
+var minOperations = function (boxes) {
+  let answer = [];
+  for (let i = 0; i < boxes.length; i++) {
+    let steps = 0;
+    for (let j = i + 1; j < boxes.length; j++) {
+      if (boxes[j] == "1") {
+        steps += Math.abs(i - j);
+      }
+    }
+    answer.push(steps);
+    // steps = 0;
+  }
+  return answer;
+};
+// console.log(minOperations("001011"));
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var countVowelStrings = function (n) {
+  let result = [];
+  let vowels = ["a", "e", "i", "o", "u"];
+  let currentIndex = 0;
+  for (let i = 0; i < n * 2; i++) {
+    for (let ch = 0; ch < vowels.length; ch++) {
+      let currChar = vowels[currentIndex];
+      if (currChar.charCodeAt() <= vowels[ch].charCodeAt())
+        result.push(currChar + vowels[ch]);
+    }
+    if (currentIndex == 4) {
+      currentIndex = 0;
+    } else {
+      currentIndex++;
+    }
+  }
+  return result.length;
+};
+
+// console.log(countVowelStrings(1));
+
+var lengthOfLongestSubstring = function (s) {
+  let fast = 0,
+    slow = 0,
+    max = 0,
+    set = new Set();
+
+  while (fast < s.length) {
+    const element = s[fast];
+    if (!set.has(element)) {
+      set.add(element);
+      fast++;
+    } else {
+      set.delete(s[slow]);
+      slow++;
+    }
+    max = Math.max(max, set.size);
+  }
+  return max;
+};
+// console.log(lengthOfLongestSubstring("abcabcbb"));
+
+/**
+ * @param {string} s
+ * @param {number[]} distance
+ * @return {boolean}
+ */
+var checkDistances = function (s, distance) {
+  for (let i = 0; i < s.length; i++) {
+    let indexOfDistance = s[i].charCodeAt() - 97;
+    if (searchByTwo(s, i + 1, s[i]) == undefined) continue;
+    let theActualDistance = searchByTwo(s, i + 1, s[i]) - (i + 1);
+    if (distance[indexOfDistance] !== theActualDistance) return false;
+  }
+  return true;
+};
+
+function searchByTwo(s, start, target) {
+  let end = s.length - 1;
+  while (start <= end) {
+    if (s[start] == target) return start;
+    else if (s[end] == target) return end;
+    start++;
+    end--;
+  }
+}
+
+let result = checkDistances(
+  "aa",
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+);
+// console.log(result);
+
+/**
+ * @param {number[][]} matrix
+ * @return {number[]}
+ */
+var luckyNumbers = function (matrix) {
+  let col = [];
+  let maxCol = [];
+  let length = matrix.length;
+  let isEq = false;
+  if (matrix.length == matrix[0].length) isEq = true;
+
+  for (let i = 0; i < length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
+      if (!isEq) {
+        if (j == matrix[i].length - 1) continue;
+      }
+      console.log(j, i);
+      col.push(matrix[j][i]);
+    }
+    maxCol.push(Math.max(...col));
+    col = [];
+  }
+  let row = [];
+  let maxRow = [];
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
+      row.push(matrix[i][j]);
+    }
+    maxRow.push(Math.min(...row));
+    row = [];
+  }
+  console.log(maxCol, maxRow);
+  let result = maxRow.filter((ele) => maxCol.includes(ele));
+  return result;
+};
+
+// console.log(ewq);
+/**
+ * @param {string} sentence
+ * @return {boolean}
+ */
+var checkIfPangram = function (sentence) {
+  if (sentence.length < 26) return false;
+  let map = {};
+  for (let i in sentence) {
+    const element = sentence[i];
+    if (map[element] == undefined) map[element] = 1;
+    else map[element] = map[element] + 1;
+  }
+  return Object.entries(map).length == 26;
+};

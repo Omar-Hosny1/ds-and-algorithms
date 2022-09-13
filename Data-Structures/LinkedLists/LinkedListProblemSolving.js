@@ -190,5 +190,32 @@ var deleteDuplicates = function (head) {
 // console.log(deleteDuplicates(linkedList));
 // console.log(Array.from(new Set([1, 1, 1])));
 
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} list1
+ * @param {ListNode} list2
+ * @return {ListNode}
+ */
+var mergeTwoLists = function (list1, list2) {
+  let listNodee = new ListNode();
+  let list = listNodee;
+  while (list1 && list2) {
+    if (list1.val < list2.val) {
+      listNodee.next = new ListNode(list1.val);
+      list1 = list1.next;
+    } else {
+      listNodee.next = new ListNode(list2.val);
+      list2 = list2.next;
+    }
+    listNodee = listNodee.next;
+  }
+  !list1 ? (listNodee.next = list2) : (listNodee.next = list1);
 
-
+  return list.next;
+};
