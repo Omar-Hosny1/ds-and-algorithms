@@ -126,6 +126,52 @@ class BinarySearchTree {
       }
     }
   }
+  breadthFirstSearch() {
+    let currentNode = this.root;
+    let list = [];
+    let queue = [];
+    queue.push(currentNode);
+    while (queue.length > 0) {
+      currentNode = queue.shift();
+      list.push(currentNode.value);
+      if (currentNode.left) {
+        queue.push(currentNode.left);
+      }
+      if (currentNode.right) {
+        queue.push(currentNode.right);
+      }
+    }
+    return list;
+  }
+
+  breadthFirstSearchR(queue, list) {
+    if (!queue.length) {
+      return list;
+    }
+    let currentNode = queue.shift();
+    list.push(currentNode.value);
+    if (currentNode.left) {
+      queue.push(currentNode.left);
+    }
+    if (currentNode.right) {
+      queue.push(currentNode.right);
+    }
+    return this.breadthFirstSearchR(queue, list);
+  }
+
+  DFSInorder() {
+    return traverseInorder(this.root, []);
+  }
+  DFSPostorder() {
+    return traversePostorder(this.root, []);
+  }
+  DFSPreorder() {
+    return traversePreorder(this.root, []);
+  }
+
+  //     9
+  //  4     20
+  //1  6  15  170
 }
 
 const tree = new BinarySearchTree();
@@ -137,12 +183,11 @@ tree.insert(170);
 tree.insert(15);
 tree.insert(1);
 tree.lookup(15);
+
+console.log(tree.breadthFirstSearch());
+console.log(tree.breadthFirstSearchR([tree.root], []));
 // console.log(JSON.stringify(traverse(tree.root)));
 // JSON.stringify(traverse(tree.root));
-
-//     9
-//  4     20
-//1  6  15  170
 
 function traverse(node) {
   const tree = { value: node.value };
