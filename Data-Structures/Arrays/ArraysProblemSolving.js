@@ -1316,10 +1316,10 @@ function searchByTwo(s, start, target) {
   }
 }
 
-let result = checkDistances(
-  "aa",
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-);
+// let result = checkDistances(
+//   "aa",
+//   [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+// );
 // console.log(result);
 
 /**
@@ -1373,3 +1373,89 @@ var checkIfPangram = function (sentence) {
   }
   return Object.entries(map).length == 26;
 };
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var countSegments = function (s) {
+  s = s.trim();
+  if (s.length == 0) return 0;
+  let list = [];
+  if (s.split(" ").some((ele) => ele == "")) {
+    return s.split(" ").filter((ele) => ele !== "");
+  }
+  return s.split(" ").filter((ele) => ele !== "");
+};
+
+// countSegments("Of all the gin joints in all the towns in all the world,   ");
+// console.log(countSegments("Hello, my name is John"));
+
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var arrangeCoins = function (n) {
+  let numOfRows = 0;
+  for (let index = 1; index <= n; index++) {
+    n -= index;
+    numOfRows++;
+  }
+  return numOfRows;
+};
+// arrangeCoins(5);
+// console.log(arrangeCoins(8));
+
+let wqe = [4, 2, 6, 1, 3].sort((a, b) => a - b);
+
+let resqew = Infinity;
+for (let i = 0; i < wqe.length - 1; i++) {
+  let abs = Math.abs(wqe[i] - wqe[i + 1]);
+  if (abs < resqew) resqew = abs;
+}
+// console.log(resqew);
+
+const MAP = {
+  1: "Gold Medal",
+  2: "Silver Medal",
+  3: "Bronze Medal",
+};
+var findRelativeRanks = function (score) {
+  const hashmap = {};
+  const sortScore = [...score].sort((a, b) => b - a);
+  let output = [];
+
+  for (let i = 0; i < sortScore.length; i++) {
+    console.log(MAP[`${i + 1}`] || `${i + 1}`);
+    hashmap[sortScore[i]] = MAP[`${i + 1}`] || `${i + 1}`;
+  }
+
+  for (let i = 0; i < score.length; i++) {
+    output.push(hashmap[score[i]]);
+  }
+
+  return output;
+};
+// findRelativeRanks([10, 3, 8, 9, 4]);
+// console.log(findRelativeRanks([10, 3, 8, 9, 4]));
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var minimumOperations = function (nums) {
+  if (new Set(nums).size == 1) {
+    if (nums[0] == 0) return 0;
+    else return 1;
+  }
+  let op = 0;
+  nums = nums.filter((ele) => ele !== 0).sort((a, b) => a - b);
+  let i = 0;
+  while (nums[nums.length - 1] !== 0) {
+    let fele = nums[i];
+    nums = nums.map((ele) => ele - fele);
+    i++;
+  }
+  return i;
+};
+
+// console.log(minimumOperations([1, 5, 0, 3, 5]));
