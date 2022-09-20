@@ -1459,3 +1459,135 @@ var minimumOperations = function (nums) {
 };
 
 // console.log(minimumOperations([1, 5, 0, 3, 5]));
+// console.log([1, 3, 2, 2, 5, 2, 3, 7].sort((a, b) => a - b));
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {boolean}
+ */
+var kLengthApart = function (nums, k) {
+  //     if(new Set(nums).size == 1 && nums[0] == 0) return true
+  //     if(new Set(nums).size == 1 && k == 0) return true
+  //     if(new Set(nums).size == 1) return false
+  let map = {};
+  for (let i in nums) {
+    let ele = nums[i];
+    if (ele == 1) {
+      if (map[ele] == undefined) {
+        map[ele] = [+i];
+      } else {
+        let arr = map[ele];
+        // console.log(arr, i);
+        if (i - arr[arr.length - 1] > k) {
+          map[ele] = [...map[ele], +i];
+        } else {
+          return false;
+        }
+      }
+    }
+  }
+  return true;
+};
+
+// console.log(kLengthApart([1, 0, 0, 0, 1, 0, 0, 1], 2));
+
+/**
+ * @param {number[]} nums
+ * @param {number[]} index
+ * @return {number[]}
+ */
+var createTargetArray = function (nums, index) {
+  let res = [];
+  for (let i = 0; i < index.length; i++) {
+    if (res[index[i]] == undefined) {
+      res[index[i]] = nums[i];
+    } else {
+      res = shiftTheEle(res, index[i], nums[i]);
+    }
+  }
+  return res;
+};
+// console.log(createTargetArray([0, 1, 0], [0, 1, 0]));
+
+function shiftTheEle(arr, index, ele) {
+  let half = [];
+  half.push(ele);
+  for (let i = index; i < arr.length; i++) {
+    half.push(arr[i]);
+  }
+  return [...arr.slice(0, index), ...half];
+}
+// console.log(shiftTheEle([0, 1], 0, 0));
+/**
+ * @param {number} numRows
+ * @return {number[][]}
+ */
+var generate = function (numRows) {
+  if (numRows == 1) return [[1]];
+  if (numRows == 2) return [[1], [1, 1]];
+  let res = [];
+  res.push([1]);
+  for (let i = 1; i < numRows; i++) {
+    let prev = res[res.length - 1];
+    res.push(createNewPascal(prev));
+  }
+  return res;
+};
+
+function createNewPascal(prev) {
+  let res = [];
+  res.push(1);
+  for (let i = 0; i < prev.length - 1; i++) {
+    const element = prev[i];
+    const element1 = prev[i + 1];
+    res.push(element + element1);
+  }
+  res.push(1);
+  return res;
+}
+// generate(5);
+// console.log(generate(5));
+
+/**
+ * @param {number[][]} matrix
+ * @return {boolean}
+ */
+var isToeplitzMatrix = function (matrix) {
+  let eleLength = matrix[0].length;
+  for (let i = 0; i < matrix.length - 1; i++) {
+    let firstSlice = matrix[i].slice(0, eleLength - 1);
+    let secSlice = matrix[i + 1].slice(1, eleLength);
+    if (!theSameArr(firstSlice, secSlice)) return false;
+  }
+  return true;
+};
+function theSameArr(arr1, arr2) {
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) return false;
+  }
+  return true;
+}
+
+// console.log(
+//   isToeplitzMatrix([
+//     [1, 2],
+//     [2, 2],
+//   ])
+// );
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var pivotIndex = function (nums) {
+  let leftSum = 0;
+  let sumOfTheArr = nums.reduce((ele, acc) => ele + acc);
+  let rightSum = nums.reduce((ele, acc) => ele + acc);
+  for (let i = 0; i < nums.length; i++) {
+    rightSum = sumOfTheArr - nums[i] - leftSum; // 9 - 2 - 1
+    if (leftSum == rightSum) return i;
+    leftSum += nums[i];
+  }
+  return -1;
+};
+console.log(pivotIndex([1, 2, 3, 2, 1]));
