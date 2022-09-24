@@ -1590,4 +1590,302 @@ var pivotIndex = function (nums) {
   }
   return -1;
 };
-console.log(pivotIndex([1, 2, 3, 2, 1]));
+// console.log(pivotIndex([1, 2, 3, 2, 1]));
+
+var largestLocal = function (grid) {
+  let result = [];
+
+  for (let i = 1; i < grid.length - 1; i++) {
+    let resultRow = [];
+    for (let j = 1; j < grid[i].length - 1; j++) {
+      let max = Math.max(
+        grid[i - 1][j - 1],
+        grid[i - 1][j],
+        grid[i - 1][j + 1],
+
+        grid[i][j - 1],
+        grid[i][j],
+        grid[i][j + 1],
+
+        grid[i + 1][j - 1],
+        grid[i + 1][j],
+        grid[i + 1][j + 1]
+      );
+      resultRow.push(max);
+    }
+    result.push(resultRow);
+  }
+
+  return result;
+};
+
+// console.log(
+//   largestLocal([
+//     [9, 9, 8, 1],
+//     [5, 6, 2, 6],
+//     [8, 2, 6, 4],
+//     [6, 2, 2, 2],
+//   ])
+// );
+
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var numberOfPairs = function (nums) {
+  let counter = 0;
+  let sortedNums = [...nums].sort((a, b) => a - b);
+  let i = 0,
+    j = 1;
+  while (j < sortedNums.length) {
+    if (sortedNums[i] == sortedNums[j]) {
+      if (sortedNums[j + 1] == undefined) {
+        sortedNums = sortedNums.slice(0, i);
+      } else {
+        sortedNums = [...sortedNums.slice(0, i), ...sortedNums.slice(j + 1)];
+      }
+      i = 0;
+      j = 1;
+      counter++;
+    } else {
+      i++;
+      j++;
+    }
+  }
+  return [counter, sortedNums.length];
+};
+
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var numberOfPairs2 = function (nums) {
+  let counter = 0;
+  let sortedNums = [...nums].sort((a, b) => a - b);
+  let stack = [];
+  for (let i = 0; i < sortedNums.length; i++) {
+    let lstEle = stack[stack.length - 1];
+    let ele = sortedNums[i];
+    if (lstEle == ele) {
+      stack.pop();
+      counter++;
+    } else {
+      stack.push(ele);
+    }
+  }
+  return [counter, stack.length];
+};
+// console.log(numberOfPairs2([1, 2, 2, 3, 4, 4, 5]));
+
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var greatestLetter = function (s) {
+  let res = [];
+  for (let i = 0; i < s.length; i++) {
+    if (isUpperCase(s[i])) res.push(s[i]);
+  }
+  let letterRes = "-";
+  for (let i = 0; i < s.length; i++) {
+    if (!isUpperCase(s[i])) {
+      let upperCaseLetter = String.fromCharCode(s[i].charCodeAt() - 32);
+      if (res.includes(upperCaseLetter)) {
+        if (letterRes.charCodeAt() < s[i].charCodeAt()) {
+          letterRes = s[i];
+        }
+      }
+    }
+  }
+  return letterRes.toUpperCase();
+};
+
+function isUpperCase(char) {
+  if (char.toUpperCase() == char) return true;
+}
+
+// console.log(greatestLetter("arRAzFif"));
+
+/**
+ * @param {number[][]} grid
+ * @return {boolean}
+ */
+var checkXMatrix = function (grid) {
+  let lengthOfTheRow = grid[0].length;
+  for (let i = 0; i < grid.length; i++) {
+    if (i == 0 || i == grid.length - 1) {
+      if (grid[i][0] == 0 || grid[i][lengthOfTheRow - 1] == 0) return false;
+      for (let j = 1; j < lengthOfTheRow - 1; j++) {
+        if (grid[i][j] !== 0) return false;
+      }
+    } else {
+      if (grid[i][0] !== 0 || grid[i][lengthOfTheRow - 1] !== 0) return false;
+      for (let j = 1; j < lengthOfTheRow - 1; j++) {
+        if (grid[i][j] == 0) return false;
+      }
+    }
+  }
+  return true;
+};
+
+// console.log(
+//   checkXMatrix([
+//     [5, 7, 0],
+//     [0, 3, 1],
+//     [0, 5, 0],
+//   ])
+// );
+/**
+ * @param {number[][]} matches
+ * @return {number[][]}
+ */
+var findWinners = function (matches) {
+  let map = {};
+  for (let ele of matches) {
+    let player1 = ele[0];
+    let player2 = ele[1];
+    if (map[player1] == undefined) {
+      map[player1] = 2;
+    }
+    if (map[player2] == undefined) {
+      map[player2] = 2;
+    }
+  }
+  for (let i = 0; i < matches.length; i++) {
+    const element = matches[i][1];
+    if (map[element] !== undefined) {
+      map[element] = map[element] - 1;
+    }
+  }
+  let playersThatHaveNotLostAnyMatches = [];
+  let playersThatLostOneMatche = [];
+  for (const key in map) {
+    if (map[key] == 2) playersThatHaveNotLostAnyMatches.push(+key);
+    if (map[key] == 1) playersThatLostOneMatche.push(+key);
+  }
+  return [playersThatHaveNotLostAnyMatches, playersThatLostOneMatche];
+};
+
+findWinners([
+  [2, 3],
+  [1, 3],
+  [5, 4],
+  [6, 4],
+]);
+
+/**
+ * @param {string} s
+ * @param {number} k
+ * @return {number}
+ */
+var characterReplacement = function (s, k) {
+  if (new Set(s).size == 1 && k == 1) return s.length;
+  if (k == 0) {
+    return characterReplacement2(s, k);
+  }
+  let kDash = k;
+  let i = 0;
+  let test = "",
+    mainChar = "",
+    returnPos = [];
+  let lengths = [];
+  while (i < s.length) {
+    if (!mainChar) mainChar = s[i];
+    if (mainChar == s[i]) {
+      test += s[i];
+    } else {
+      if (kDash !== 0) {
+        test += mainChar;
+        returnPos.push(i);
+        kDash--;
+      } else {
+        i = returnPos[0];
+        returnPos.shift();
+        lengths.push(test.length);
+        mainChar = "";
+        kDash = k;
+        test = "";
+      }
+    }
+    if (i == s.length - 1) lengths.push(test.length);
+    i++;
+  }
+  if (lengths.length == 1) return lengths[0];
+  return Math.max(...lengths);
+};
+// characterReplacement("ABAB", 2);
+// console.log(characterReplacement("ABAB", (k = 2)));
+
+var characterReplacement2 = function (s, k) {
+  const charCount = {};
+  let l = 0,
+    res = 0,
+    maxF = 0;
+  for (let r = 0; r < s.length; r++) {
+    charCount[s[r]] = charCount[s[r]] + 1 || 1;
+    maxF = Math.max(maxF, charCount[s[r]]);
+    while (r - l + 1 - maxF > k) {
+      charCount[s[l]]--;
+      l++;
+    }
+    res = Math.max(res, r - l + 1);
+  }
+  return res;
+};
+
+/**
+ * @param {string} ransomNote
+ * @param {string} magazine
+ * @return {boolean}
+ */
+var canConstruct = function (ransomNote, magazine) {
+  if (ransomNote.length == 1 && magazine.length == 1) {
+    return ransomNote == magazine;
+  }
+  let map1 = {};
+  for (let ele of magazine) {
+    if (!map1[ele]) {
+      map1[ele] = 1;
+    } else {
+      map1[ele] = map1[ele] + 1;
+    }
+  }
+  for (let i = 0; i < ransomNote.length; i++) {
+    const element = ransomNote[i];
+    if (map1[element] == undefined) return false;
+    if (map1[element] > 0) {
+      map1[element] = map1[element] - 1;
+    } else {
+      return false;
+    }
+  }
+  return true;
+};
+// console.log(canConstruct("aa", "ab"));
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var findUnsortedSubarray = function (nums) {
+  if (nums.length == 1) return 0;
+  let sortedNums = [...nums].sort((a, b) => a - b);
+  if (isEqualArr(nums, sortedNums)) return 0;
+  let start = 0,
+    end = nums.length - 1;
+  while (true) {
+    if (sortedNums[start] !== nums[start] && sortedNums[end] !== nums[end])
+      break;
+    if (sortedNums[start] == nums[start]) start++;
+    if (sortedNums[end] == nums[end]) end--;
+  }
+  return nums.slice(start, end + 1).length;
+};
+// console.log(findUnsortedSubarray([1, 2, 3]));
+// if ([1, 2, 3] == [1, 2, 3]) console.log("ads");
+function isEqualArr(arr1, arr2) {
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) return false;
+  }
+  return true;
+}
