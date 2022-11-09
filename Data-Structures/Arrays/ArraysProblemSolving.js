@@ -1889,3 +1889,182 @@ function isEqualArr(arr1, arr2) {
   }
   return true;
 }
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {number}
+ */
+var minSteps = function (s, t) {
+  let mapT = {};
+  for (let i in t) {
+    let ele = t[i];
+    mapT[ele] == undefined ? (mapT[ele] = 1) : (mapT[ele] += 1);
+  }
+  let counter = 0;
+  for (let i = 0; i < s.length; i++) {
+    let ele = s[i];
+    if (mapT[ele] > 0) {
+      mapT[ele] -= 1;
+    } else {
+      counter++;
+    }
+  }
+  return counter;
+};
+// console.log(minSteps("leetcode", "practice"));
+
+/**
+ * @param {string[]} names
+ * @param {number[]} heights
+ * @return {string[]}
+ */
+var sortPeople = function (names, heights) {
+  let sortedH = [...heights].sort((a, b) => a - b).reverse();
+  let res = [];
+  for (let i = 0; i < names.length; i++) {
+    res[sortedH.indexOf(heights[i])] = names[i];
+  }
+  return res;
+};
+// console.log(sortPeople(["Alice", "Bob", "Bob"], [155, 185, 150]));
+
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var repeatedSubstringPattern = function (s) {
+  let i = 1,
+    subStr = s[0];
+  while (subStr.length <= Math.floor(s.length / 2)) {
+    if (!isRepeatedPattern(subStr, s)) {
+      subStr += s[i++];
+    } else {
+      return true;
+    }
+  }
+  return false;
+};
+function isRepeatedPattern(pattern, s) {
+  let str = "";
+  for (let i = 0; i < s.length; i += pattern.length) {
+    str = s[i];
+    if (pattern !== s.slice(i, i + pattern.length)) {
+      return false;
+    }
+  }
+  return true;
+}
+// console.log(repeatedSubstringPattern("ababababab"));
+
+/**
+ * @param {string} word
+ * @return {number}
+ */
+var numDifferentIntegers = function (word) {
+  let map = {},
+    currentNum = "";
+  function addToMap(currentNum) {
+    map[currentNum] == undefined
+      ? (map[currentNum] = 1)
+      : (map[currentNum] += 1);
+  }
+  for (let i = 0; i < word.length; i++) {
+    if (Number(word[i]) || word[i] == "0") {
+      currentNum += word[i];
+    } else {
+      if (currentNum !== "") {
+        if (currentNum.includes("0")) {
+          currentNum = removeZeros(currentNum);
+        }
+        addToMap(currentNum);
+      }
+      currentNum = "";
+    }
+  }
+  if (currentNum !== "") {
+    if (currentNum.includes("0")) {
+      currentNum = removeZeros(currentNum);
+    }
+    addToMap(currentNum);
+  }
+  return Object.keys(map).length;
+};
+function removeZeros(str) {
+  let res = "";
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] !== "0") return str.slice(i);
+  }
+  return res;
+}
+
+// console.log(numDifferentIntegers("a1b01c001"));
+// console.log(removeZeros("10"));
+
+/**
+ * @param {string} s1
+ * @param {string} s2
+ * @return {boolean}
+ */
+var areAlmostEqual = function (s1, s2) {
+  let isOk = 0;
+  for (let i = 0; i < s1.length; i++) {
+    if (s1[i] !== s2[i]) {
+      s1[i] = s2[i];
+      console.log(s1);
+      isOk++;
+      if (isOk == 2) {
+        return s1 == s2;
+      }
+    }
+  }
+};
+function ValidateEmail(mail) {
+  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+let emails = [
+  "test.email+alex@leetcode.com",
+  "test.e.mail+bob.cathy@leetcode.com",
+  "testemail+david@lee.tcode.com",
+];
+for (let i = 0; i < emails.length; i++) {
+  const element = emails[i];
+  if (ValidateEmail(element[i])) console.log("ok");
+}
+
+/**
+ * @param {number[][]} matrix
+ * @return {number[][]}
+ */
+var transpose = function (matrix) {
+  let res = [];
+  let lenOfRow = matrix[0].length;
+  for (let i = 0; i < lenOfRow; i++) {
+    res.push(getCol(matrix, i));
+  }
+  return res;
+};
+
+function getCol(matrix, k) {
+  let res = [];
+  for (let i = 0; i < matrix.length; i++) {
+    let col = [];
+    for (let j = k; j < matrix[i].length; j++) {
+      col.push(matrix[i][j]);
+      break;
+    }
+    res.push(...col);
+    col = [];
+  }
+  return res;
+}
+
+transpose([
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9],
+]);
