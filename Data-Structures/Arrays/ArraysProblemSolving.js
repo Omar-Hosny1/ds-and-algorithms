@@ -2059,6 +2059,7 @@ function getCol(matrix, k) {
     }
     res.push(...col);
     col = [];
+    // sad
   }
   return res;
 }
