@@ -13,6 +13,7 @@ function mergeSort(array) {
   const right = array.slice(middle);
   // console.log('left:', left);
   // console.log('right:', right);
+
   return merge(mergeSort(left), mergeSort(right));
 }
 
@@ -34,4 +35,4 @@ function merge(left, right) {
 }
 
 const answer = mergeSort(numbers);
-console.log(answer);
+// console.log(answer);

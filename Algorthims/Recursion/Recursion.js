@@ -42,4 +42,54 @@ function totalSum(n) {
   totalSum(n) + totalSum(n - 1);
 }
 
-totalSum(3);
+// totalSum(3);
+
+function facR(x) {
+  debugger;
+  if (x <= 1) {
+    return 1;
+  }
+  return x * facR(x - 1);
+}
+
+// facR(4);
+// console.log(facR(4));
+
+function facRTail(x, sumSoFar = 1) {
+  if (x == 0) {
+    return sumSoFar;
+  }
+  return facRTail(x - 1, sumSoFar * x);
+}
+
+// console.log(facRTail(4));
+
+const swap = function (array, i, j) {
+  const temp = array[i];
+  array[i] = array[j];
+  array[j] = temp;
+};
+
+const getPartition = function (nums, left, right) {
+  const pivotElement = nums[right];
+  let partitionIdx = left;
+
+  for (let j = left; j < right; j++) {
+    if (nums[j] <= pivotElement) {
+      swap(nums, partitionIdx, j);
+      partitionIdx++;
+    }
+  }
+  swap(nums, partitionIdx, right);
+
+  return partitionIdx;
+};
+
+const quickSort = function (nums, left, right) {
+  if (left < right) {
+    const partitionIndex = getPartition(nums, left, right);
+
+    quickSort(nums, left, partitionIndex - 1);
+    quickSort(nums, partitionIndex + 1, right);
+  }
+};

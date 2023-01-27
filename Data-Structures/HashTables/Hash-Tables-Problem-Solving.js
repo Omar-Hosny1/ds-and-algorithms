@@ -606,3 +606,38 @@ var countPoints = function (rings) {
   }
   return counter;
 };
+/**
+ * @param {string} allowed
+ * @param {string[]} words
+ * @return {number}
+ */
+var countConsistentStrings = function (allowed, words) {
+  let allowedMap = new Map();
+  for (let char of allowed) {
+    if (!allowedMap.has(char)) {
+      allowedMap.set(char, 0);
+    }
+  }
+  let res = 0;
+  for (let word of words) {
+    if (isConsistent(allowedMap, word)) {
+      res++;
+    }
+  }
+  return res;
+};
+function isConsistent(allowedMap, word) {
+  let left = 0;
+  let right = word.length - 1;
+  while (left <= right) {
+    if (!allowedMap.has(word[left])) {
+      return false;
+    }
+    if (!allowedMap.has(word[right])) {
+      return false;
+    }
+    left++;
+    right--;
+  }
+  return true;
+}
