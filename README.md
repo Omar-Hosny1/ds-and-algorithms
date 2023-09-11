@@ -20,8 +20,6 @@ The `Algos` folder contains various algorithm types, each with its own subfolder
 
 ### ...
 
-(Repeat this structure for each algorithm type)
-
 ## Data Structures (`Data Structures` Folder)
 
 The `Data Structures` folder follows a similar structure as the `Algos` folder, with individual subfolders for different types of data structures:
@@ -39,8 +37,6 @@ The `Data Structures` folder follows a similar structure as the `Algos` folder, 
 - **Solved Problems (`Solved Problems` Folder)**: Here, you can explore solved problems related to Data Structure Type 2.
 
 ### ...
-
-(Repeat this structure for each data structure type)
 
 ## Conclusion
 
